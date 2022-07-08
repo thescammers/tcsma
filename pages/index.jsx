@@ -5,7 +5,11 @@ import Contents from './Contents'
 import styles from '../styles/Home.module.css'
 
 
-
+let audio
+if (typeof window !== 'undefined') {
+  audio = new Audio('/aud/The_scam_no1.wav')
+  audio.loop=true;
+}
 
 
 export default function Home() {
@@ -13,12 +17,9 @@ export default function Home() {
   const [start, setStart] = useState(false);
   const [count, setCount] = useState(0);
   const [musicplay, setMusicplay] = useState(false);
-  const [audio, setAudio] = useState();
+
   const [clickAudio, setClickAudio] = useState();
-  
-  useEffect(() => { setAudio(new Audio('/aud/The_scam_no1.wav'));                     
-                   if(audio) audio.loop = true;
-                   }, [])
+
   useEffect(() => { setClickAudio(new Audio('/aud/Click_Sound.wav')) }, [])
   useEffect(() => {
     const id = setInterval(() => setCount((oldCount) => oldCount + 1), 500);
@@ -34,7 +35,7 @@ export default function Home() {
   );
   
   const clickSound = () => {
-    clickAudio.play()
+    clickAudio?.play()
   }
   
 
@@ -58,7 +59,7 @@ export default function Home() {
 
         
     {start? (<Contents setMusicplay={setMusicplay} musicplay={musicplay}/>) : (<div className="w-full flex-1 flex flex-col justify-center items-center">
-          <div onClick={()=>{setStart(true); setTimeout(setMusicplay, 1000, true); clickSound(); }}className={`before:content-['mint'] hover:before:content-['AgAin?'] bg-black text-white md:text-xl px-3 py-2 md:px-5 md:py-3 border-2 border-black font-bold cursor-pointer hover:border-white hover:bg-white hover:text-black`}>
+          <div onClick={()=>{setStart(true); setMusicplay(true); clickSound(); }}className={`before:content-['mint'] hover:before:content-['AgAin?'] bg-black text-white md:text-xl px-3 py-2 md:px-5 md:py-3 border-2 border-black font-bold cursor-pointer hover:border-white hover:bg-white hover:text-black`}>
   
           </div>
         </div>)}

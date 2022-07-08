@@ -9,14 +9,14 @@ const providerOptions = {
 walletconnect: {
 package: WalletConnectProvider,
 options: {
- infuraId: "765d4237ce7e4d999f706854d5b66fdc"
+ infuraId: "708f71622d184ef1bf7f8e3753a61134"
 }
  },
       coinbasewallet: {
         package: CoinbaseWalletSDK, // Required
         options: {
           appName: "Net2Dev NFT Minter", // Required
-          infuraId: "765d4237ce7e4d999f706854d5b66fdc", // Required
+          infuraId: "708f71622d184ef1bf7f8e3753a61134", // Required
           rpc: "", // Optional if `infuraId` is provided; otherwise it's required
           chainId: 1, // Optional. It defaults to 1 if not provided
           darkMode: true // Optional. Use dark theme, defaults to false
@@ -26,8 +26,9 @@ options: {
 let web3Modal
 if (typeof window !== 'undefined') {
   web3Modal = new Web3Modal({
-    network: 'mainnet', // optional
-    cacheProvider: true,
+    network: 'rinkeby', // optional
+    cacheProvider: false,
+    theme: "dark",
     providerOptions, // required
   })
 }
