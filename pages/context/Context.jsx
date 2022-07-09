@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {address, ABI } from "../constant/Constant";
+
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import WalletConnectProvider from "@walletconnect/web3-provider";
+
 
 const providerOptions = {
 
@@ -38,6 +41,7 @@ export const Context = React.createContext();
 export const Provider = ({ children }) => {
 
     const [address, setAddress] = useState();
+    const [instance, setInstance] = useState();
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
@@ -49,27 +53,36 @@ export const Provider = ({ children }) => {
     async function connectwallet() {
       try {
 
-        const instance = await web3Modal.connect();
+        const instance1 = await web3Modal.connect();
+        setInstance(instance1);
         const provider = new ethers.providers.Web3Provider(instance);
         const signer = provider.getSigner();
         const address = await signer.getAddress()
         setAddress(address);
-
         } catch (err) {
-
           console.log("지갑연결 안함")
-
         }
-       
-       
     }
-     
 
+    async function mint() {
+      try {
+        if(instance){
+            const provider = new ethers.providers.Web3Provider(instance);
+            const signer = provider.getSigner();
+            const address = await signer.getAddress()
+            const contract = new ethers.Contract(address, ABI, signer);
+            const mint = await contract.mint(address, 1)
+          }
+        } catch (err) {
+          console.log("지갑연결 안함")
+        }
+    }
       return (
         <Context.Provider
           value={{
            connectwallet,
             address,
+            mint,
           }}
         >
           {children}
