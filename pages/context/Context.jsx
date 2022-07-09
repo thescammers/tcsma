@@ -54,13 +54,12 @@ export const Provider = ({ children }) => {
         setProvider(provider);
         if (accounts) setAccount(accounts[0]);
         setChainId(network.chainId);
-        console.log(account) 
-          console.log(chainId)
+
         console.log(provider)
         } catch (err) {
           console.log("지갑연결 안함")
         }
-  }, [])
+  }, [account, chainId])
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
