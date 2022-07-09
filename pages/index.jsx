@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import dynamic from 'next/dynamic'
+
 import React, {useState, useEffect} from 'react';
 import Contents from './Contents'
 import styles from '../styles/Home.module.css'
