@@ -15,7 +15,7 @@ function InnerContents(props) {
   
     useEffect(() => {
       getSupply();
-  }, [supply]);
+  }, [getSupply, supply]);
 
 
   return (

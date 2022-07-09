@@ -19,7 +19,7 @@ const providerOptions = {
       coinbasewallet: {
         package: CoinbaseWalletSDK, // Required
         options: {
-          appName: "Net2Dev NFT Minter", // Required
+          appName: "the scam.", // Required
           infuraId: "765d4237ce7e4d999f706854d5b66fdc", // Required
           rpc: "", // Optional if `infuraId` is provided; otherwise it's required
           chainId: 4, // Optional. It defaults to 1 if not provided
@@ -52,7 +52,7 @@ export const Provider = ({ children }) => {
     if (web3Modal.cachedProvider) {
       connectwallet()
     }
-  }, [])
+  }, [connectwallet])
 
     const getSupply = async() => {
       try {

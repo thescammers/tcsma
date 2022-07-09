@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
 import InnerContents from './InnerContents'
 import Roadmap from './Roadmap'
 import {Context} from './context/Context'
@@ -46,7 +47,7 @@ function Contents(props) {
       
       
           <div id="ques" onClick={() => { props.setMusicplay(!props.musicplay); setStop(!stop) }} className={`h-28 w-28 mb-3 cursor-pointer transition-opacity duration-500 ease-in ${count300 > 2 ? 'opacity-100' : 'opacity-0'}`}>
-            <img alt="logo" className="object-fill" src={stop? `/33logo/0.PNG` : `/33logo/${count % 33 + 1}.PNG`} />
+            <Image alt="logo" className="object-fill" src={stop? `/33logo/0.PNG` : `/33logo/${count % 33 + 1}.PNG`} />
           </div>
 
 
