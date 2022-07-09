@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {address, ABI} from "../constant/Constant";
-
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
@@ -46,9 +45,8 @@ export const Provider = ({ children }) => {
     const [supply, setSupply] = useState();
     const [account, setAccount] = useState();
     const [chainId, setChainId] = useState();
-  const connectwallet = async() => {
-      try {
-        
+  const connectwallet = useCallback(async function () {
+    try {
         const provider = await web3Modal.connect();
         const ethProvider = new ethers.providers.Web3Provider(provider);
         const accounts = await ethProvider.listAccounts();
@@ -62,13 +60,13 @@ export const Provider = ({ children }) => {
         } catch (err) {
           console.log("지갑연결 안함")
         }
-    }
+  }, [])
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
       connectwallet()
     }
-  }, [])
+  }, [connectwallet])
   
 
 
