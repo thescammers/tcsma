@@ -44,22 +44,20 @@ export const Provider = ({ children }) => {
     const [provider, setProvider] = useState();
     const [supply, setSupply] = useState();
     const [account, setAccount] = useState();
-    const [chainId, setChainId] = useState();
+
   const connectwallet = useCallback(async function () {
     try {
         const provider = await web3Modal.connect();
         const ethProvider = new ethers.providers.Web3Provider(provider);
         const accounts = await ethProvider.listAccounts();
-        const network = await ethProvider.getNetwork();
         setProvider(provider);
         if (accounts) setAccount(accounts[0]);
-        setChainId(network.chainId);
 
         console.log(provider)
         } catch (err) {
           console.log("지갑연결 안함")
         }
-  }, [account, chainId])
+  }, [])
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
