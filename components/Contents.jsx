@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import InnerContents from './InnerContents'
 import Roadmap from './Roadmap'
-import {Context} from './context/Context'
+import {Context} from '../context/Context'
 
 function Contents(props) {
 

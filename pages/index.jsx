@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect} from 'react';
-import Contents from './Contents'
+import Contents from '../components/Contents'
 import styles from '../styles/Home.module.css'
 
 

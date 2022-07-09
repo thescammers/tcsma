@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Context } from './context/Context'
+import { Context } from '../context/Context'
 
 function InnerContents(props) {
 

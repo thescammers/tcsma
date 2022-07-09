@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import dynamic from "next/dynamic";
-import {Provider} from './context/Context'
+import {Provider} from '../context/Context'
 
 const App = ({ Component, pageProps }) => {
   return (
