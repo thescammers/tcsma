@@ -46,29 +46,7 @@ export const Provider = ({ children }) => {
     const [supply, setSupply] = useState();
     const [account, setAccount] = useState();
     const [chainId, setChainId] = useState();
-
-
-  useEffect(() => {
-    if (web3Modal.cachedProvider) {
-      connectwallet()
-    }
-  }, [connectwallet])
-
-    const getSupply = async() => {
-      try {
-        if(provider){
-
-            const ethProvider = new ethers.providers.Web3Provider(provider);
-            const contract = new ethers.Contract(address, ABI, ethProvider);
-            const supply = await contract.totalSupply();
-            const supplyinString = supply.toString()
-            setSupply(supplyinString)
-          }
-        } catch (err) {
-          console.log(err)
-        }
-    }
-    async function connectwallet() {
+  const connectwallet = async() => {
       try {
         
         const provider = await web3Modal.connect();
@@ -85,6 +63,30 @@ export const Provider = ({ children }) => {
           console.log("지갑연결 안함")
         }
     }
+
+  useEffect(() => {
+    if (web3Modal.cachedProvider) {
+      connectwallet()
+    }
+  }, [])
+  
+
+
+    const getSupply = async() => {
+      try {
+        if(provider){
+
+            const ethProvider = new ethers.providers.Web3Provider(provider);
+            const contract = new ethers.Contract(address, ABI, ethProvider);
+            const supply = await contract.totalSupply();
+            const supplyinString = supply.toString()
+            setSupply(supplyinString)
+          }
+        } catch (err) {
+          console.log(err)
+        }
+    }
+    
 
     async function mint() {
       try {
