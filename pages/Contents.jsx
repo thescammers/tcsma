@@ -12,7 +12,7 @@ function Contents(props) {
   const [stop, setStop] = useState(false);
   const [roadmap, setRoadmap] = useState(false);
   const [userName, setUserName] = useState();
-  const {connectwallet, address} = React.useContext(Context)
+  const {connectwallet, account} = React.useContext(Context)
   useEffect(() => {
     const id = setInterval(() => setCount((oldCount) => oldCount + 1), 500); //이거 숫자 낮추고 디테일하기 바꾸기 느낌표 워닝 먼저 나오게하기
     if (stop) { clearInterval(id); }
@@ -32,11 +32,11 @@ function Contents(props) {
     };
   }, []);
       useEffect(() => {
-        if (address) {
+        if (account) {
               setUserName(
-                `${address.slice(0, 7)}...${address.slice(38)}`,
+                `${account.slice(0, 7)}...${account.slice(38)}`,
               )
-      }}, [address])
+      }}, [account])
 
   
   return(

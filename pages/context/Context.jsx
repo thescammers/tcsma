@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {address, ABI } from "../constant/Constant";
+import {address, ABI} from "../constant/Constant";
 
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
@@ -9,19 +9,20 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const providerOptions = {
 
-walletconnect: {
-package: WalletConnectProvider,
-options: {
- infuraId: "708f71622d184ef1bf7f8e3753a61134"
-}
- },
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          
+         infuraId: "765d4237ce7e4d999f706854d5b66fdc"
+        }
+       },
       coinbasewallet: {
         package: CoinbaseWalletSDK, // Required
         options: {
           appName: "Net2Dev NFT Minter", // Required
-          infuraId: "708f71622d184ef1bf7f8e3753a61134", // Required
+          infuraId: "765d4237ce7e4d999f706854d5b66fdc", // Required
           rpc: "", // Optional if `infuraId` is provided; otherwise it's required
-          chainId: 1, // Optional. It defaults to 1 if not provided
+          chainId: 4, // Optional. It defaults to 1 if not provided
           darkMode: true // Optional. Use dark theme, defaults to false
         }
       }
@@ -40,25 +41,46 @@ export const Context = React.createContext();
 
 export const Provider = ({ children }) => {
 
-    const [address, setAddress] = useState();
-    const [instance, setInstance] = useState();
+
+    const [provider, setProvider] = useState();
+    const [supply, setSupply] = useState();
+    const [account, setAccount] = useState();
+    const [chainId, setChainId] = useState();
+
 
   useEffect(() => {
     if (web3Modal.cachedProvider) {
       connectwallet()
     }
-  }, [connectwallet])
-  
+  }, [])
 
+    const getSupply = async() => {
+      try {
+        if(provider){
+
+            const ethProvider = new ethers.providers.Web3Provider(provider);
+            const contract = new ethers.Contract(address, ABI, ethProvider);
+            const supply = await contract.totalSupply();
+            const supplyinString = supply.toString()
+            setSupply(supplyinString)
+          }
+        } catch (err) {
+          console.log(err)
+        }
+    }
     async function connectwallet() {
       try {
-
-        const instance1 = await web3Modal.connect();
-        setInstance(instance1);
-        const provider = new ethers.providers.Web3Provider(instance);
-        const signer = provider.getSigner();
-        const address = await signer.getAddress()
-        setAddress(address);
+        
+        const provider = await web3Modal.connect();
+        const ethProvider = new ethers.providers.Web3Provider(provider);
+        const accounts = await ethProvider.listAccounts();
+        const network = await ethProvider.getNetwork();
+        setProvider(provider);
+        if (accounts) setAccount(accounts[0]);
+        setChainId(network.chainId);
+        console.log(account) 
+          console.log(chainId)
+        console.log(provider)
         } catch (err) {
           console.log("지갑연결 안함")
         }
@@ -66,23 +88,29 @@ export const Provider = ({ children }) => {
 
     async function mint() {
       try {
-        if(instance){
-            const provider = new ethers.providers.Web3Provider(instance);
-            const signer = provider.getSigner();
-            const address = await signer.getAddress()
+        if(provider){
+            const ethProvider = new ethers.providers.Web3Provider(provider);
+            const signer = ethProvider?.getSigner();
+            const userAddress = await signer.getAddress()
+            
+        
             const contract = new ethers.Contract(address, ABI, signer);
-            const mint = await contract.mint(address, 1)
+            const mint = await contract.mint(userAddress, 1)
+            await mint.wait()
+            getSupply();
           }
         } catch (err) {
-          console.log("지갑연결 안함")
+          console.log(err)
         }
     }
       return (
         <Context.Provider
           value={{
            connectwallet,
-            address,
+            account,
             mint,
+            getSupply,
+            supply,
           }}
         >
           {children}
