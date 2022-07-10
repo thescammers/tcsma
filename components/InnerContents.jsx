@@ -27,10 +27,10 @@ function InnerContents(props) {
 
       <div className="flex items-center space-x-5 pt-5">
         <div onClick={() => { props.setRoadmap(true); setCount(0) }} className={`${count > 3 ? 'scale-100;' : 'scale-0'} transition-all duration-700 px-3 py-2 md:px-5 md:py-3 md:text-xl border-2 border-white duration-500 font-bold cursor-pointer hover:bg-black hover:border-black hover:text-white`}>roAdmAp</div>
-        <div onClick={() => { mint() }} className={`${count > 3 ? 'scale-100;' : 'scale-0'} before:content-['mint'] hover:before:content-['soon'] bg-black text-white transition-all duration-700 px-3 py-2 md:px-5 md:py-3 md:text-xl border-2 border-black duration-500 font-bold cursor-pointer hover:bg-white hover:border-white hover:text-black`}></div>
+        <div className={`${count > 3 ? 'scale-100;' : 'scale-0'} before:content-['mint'] hover:before:content-['soon'] bg-black text-white transition-all duration-700 px-3 py-2 md:px-5 md:py-3 md:text-xl border-2 border-black duration-500 font-bold cursor-pointer hover:bg-white hover:border-white hover:text-black`}></div>
 
       </div>
-      <h1 className={`${count > 3 ? 'scale-100;' : 'scale-0'} transition-all duration-700 mt-5 text-lg md:text-2xl`}>{supply} / 9,999 sold</h1>
+      <h1 className={`${count > 3 ? 'scale-100;' : 'scale-0'} transition-all duration-700 mt-5 text-lg md:text-2xl`}>0 / 9,999 <span className="text-base">minted</span></h1>
     </div>
   )
 } export default InnerContents;
